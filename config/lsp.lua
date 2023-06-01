@@ -4,6 +4,8 @@ local lspconfig = require('lspconfig')
 lspconfig.pyright.setup {}
 lspconfig.tsserver.setup {}
 lspconfig.gopls.setup {}
+lspconfig.jdtls.setup{}
+
 lspconfig.rust_analyzer.setup {
   -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
@@ -41,7 +43,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, opts)
     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', 'gt', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', '<space>f', function()
@@ -52,11 +54,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c", "python", "rust", "javascript", "typescript", "go" },
+  ensure_installed = { "c", "python", "rust", "javascript", "typescript", "go", "java" },
   sync_install = false,
   auto_install = true,
 
-  ignore_install = { "javascript" },
 
   highlight = {
     enable = true,

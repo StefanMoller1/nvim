@@ -30,6 +30,8 @@ set encoding=UTF-8
 colorscheme dracula
 "colorscheme tokyonight-night
 
+set title
+
 set guifont=DroidSansMono_Nerd_Font:h11
 set splitright
 set splitbelow
