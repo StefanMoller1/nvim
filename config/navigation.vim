@@ -38,7 +38,7 @@ nnoremap <A-K> <C-W>K
 nnoremap <A-L> <C-W>L
 
 "" Move between panes to left/bottom/top/right
-nnoremap <C-h> <C-w>H
+nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
