@@ -8,6 +8,8 @@ local core_conf_files = {
     "nvim-tree.lua",
     "lsp.lua", 
     "navigation.vim",
+    "dap.lua",
+    "toggleterm.lua"
 }
 
 for _, name in ipairs(core_conf_files) do

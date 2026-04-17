@@ -53,6 +53,8 @@ require("tokyonight").setup({
 --    pink = "#FF79C6",
 --    bright_red = "#FF6E6E",
 --    bright_green = "#69FF94",
+--
+--
 --    bright_yellow = "#FFFFA5",
 --    bright_blue = "#D6ACFF",
 --    bright_magenta = "#FF92DF",

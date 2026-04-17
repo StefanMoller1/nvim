@@ -1,5 +1,7 @@
+vim.opt.termguicolors = true
 require("bufferline").setup{}
-require('lualine').setup()
+
+require('lualine').setup{}
 --require("tint").setup({
   --tint = -85,  -- Darken colors, use a positive value to brighten
   --saturation = 0.8,  -- Saturation to preserve

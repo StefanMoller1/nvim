@@ -1,18 +1,4 @@
 require("mason").setup()
--- Setup language servers.
-local lspconfig = require('lspconfig')
-lspconfig.pyright.setup {}
-lspconfig.tsserver.setup {}
-lspconfig.gopls.setup {}
-lspconfig.jdtls.setup{}
-
-lspconfig.rust_analyzer.setup {
-  -- Server-specific settings. See `:help lspconfig-setup`
-  settings = {
-    ['rust-analyzer'] = {},
-  },
-}
-
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -53,29 +39,116 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c", "python", "rust", "javascript", "typescript", "go", "java" },
-  sync_install = false,
-  auto_install = true,
+local cmp = require'cmp'
+
+cmp.setup({
+  snippet = {
+     expand = function(args)
+       vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+     end,
+   },
+   window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+   },
+   mapping = cmp.mapping.preset.insert({
+     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+     ['<C-Space>'] = cmp.mapping.complete(),
+     ['<C-e>'] = cmp.mapping.abort(),
+     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+   }),
+   sources = cmp.config.sources({
+     { name = 'nvim_lsp' },
+     { name = 'vsnip' }, -- For vsnip users.
+     -- { name = 'luasnip' }, -- For luasnip users.
+     -- { name = 'ultisnips' }, -- For ultisnips users.
+     -- { name = 'snippy' }, -- For snippy users.
+   }, {
+     { name = 'buffer' },
+   })
+ })
+
+ -- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
+ -- Set configuration for specific filetype.
+ --[[ cmp.setup.filetype('gitcommit', {
+   sources = cmp.config.sources({
+     { name = 'git' },
+   }, {
+     { name = 'buffer' },
+   })
+})
+require("cmp_git").setup() ]]-- 
+
+ -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+ cmp.setup.cmdline({ '/', '?' }, {
+   mapping = cmp.mapping.preset.cmdline(),
+   sources = {
+     { name = 'buffer' }
+   }
+ })
+
+ -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+ cmp.setup.cmdline(':', {
+   mapping = cmp.mapping.preset.cmdline(),
+   sources = cmp.config.sources({
+     { name = 'path' }
+   }, {
+     { name = 'cmdline' }
+   }),
+   matching = { disallow_symbol_nonprefix_matching = false }
+ })
+
+ -- Set up lspconfig.
+ local capabilities = require('cmp_nvim_lsp').default_capabilities()
+ -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+ -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+ --  capabilities = capabilities
+ -- }
+-- Setup language servers.
+vim.lsp.config('pyright',{
+     capabilities = capabilities
+})
+vim.lsp.enable('pyright')
+
+vim.lsp.config('ts_ls', {
+     capabilities = capabilities
+})
+vim.lsp.enable('ts_ls')
 
 
-  highlight = {
-    enable = true,
+vim.lsp.config('gopls', {
+     capabilities = capabilities
+})
+vim.lsp.enable('gopls')
 
-    disable = { "c" },
-    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-    disable = function(lang, buf)
-        local max_filesize = 100 * 1024 -- 100 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-            return true
-        end
-    end,
+vim.lsp.config('jdtls', {
+     capabilities = capabilities
+})
+vim.lsp.enable('jdtls')
 
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
+vim.lsp.config('rust_analyzer', {
+  -- Server-specific settings. See `:help lspconfig-setup`
+  settings = {
+    ['rust-analyzer'] = {},
   },
-}
+  capabilities = capabilities
+})
+vim.lsp.enable('rust_analyzer')
+
+require "nvim-treesitter".install { "c", "cpp", "go", "java", "javascript", "python", "rust", "typescript" }
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'rust', 'javascript', 'zig' },
+    callback = function()
+      -- syntax highlighting, provided by Neovim
+      vim.treesitter.start()
+      -- folds, provided by Neovim
+      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+      vim.wo.foldmethod = 'expr'
+      -- indentation, provided by nvim-treesitter
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
+ })
+
+
