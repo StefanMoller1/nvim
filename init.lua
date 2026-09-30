@@ -11,7 +11,8 @@ local core_conf_files = {
     "markdown.lua",
     "opencode.lua",
     "navigation.vim",
-    
+    "dap.lua",
+    "toggleterm.lua"
 }
 
 for _, name in ipairs(core_conf_files) do

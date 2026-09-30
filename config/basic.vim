@@ -27,8 +27,8 @@ set ttyfast                 " Speed up scrolling in Vim
 set encoding=UTF-8
 "set backspace=indent,eol,start
 
-colorscheme onedark
-"colorscheme tokyonight-night
+"colorscheme dracula
+" colorscheme tokyonight-night
 
 set title
 
