@@ -1,7 +1,7 @@
 require("bufferline").setup{}
 require('lualine').setup()
 require("tint").setup({
-  tint = -85,  -- Darken colors, use a positive value to brighten
+  tint = -65,  -- Darken colors, use a positive value to brighten
   saturation = 0.8,  -- Saturation to preserve
   transforms = require("tint").transforms.SATURATE_TINT,  -- Showing default behavior, but value here can be predefined set of transforms
   tint_background_colors = true,  -- Tint background portions of highlight groups
@@ -17,3 +17,9 @@ require("tint").setup({
 })
 --vim.g.loaded_netrw = 1
 --vim.g.loaded_netrwPlugin = 1
+
+-- FloaTerm configuration
+-- map('n', "<leader>ft", ":FloatermNew --name=myfloat --height=0.8 --width=0.7 --autoclose=2 fish <CR> ")
+
+-- map('n', "t", ":FloatermToggle myfloat<CR>")
+-- map('t', "<Esc>", "<C-\\><C-n>:q<CR>")

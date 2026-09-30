@@ -1,5 +1,5 @@
 local core_conf_files = {
-    "vim-plug.vim", 
+    "lazy.lua", 
     "fzf.vim",
     "colorscheme.lua",
     "basic.vim",
@@ -7,7 +7,11 @@ local core_conf_files = {
     "devicons.lua",
     "nvim-tree.lua",
     "lsp.lua", 
+    "cmp.lua",
+    "markdown.lua",
+    "opencode.lua",
     "navigation.vim",
+    
 }
 
 for _, name in ipairs(core_conf_files) do
