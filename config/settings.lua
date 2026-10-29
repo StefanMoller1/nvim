@@ -10,8 +10,9 @@ require("tint").setup({
   window_ignore_function = function(winid)
     local bufid = vim.api.nvim_win_get_buf(winid)
     local buftype = vim.api.nvim_buf_get_option(bufid, "buftype")
-    local floating = vim.api.nvim_win_get_config(winid).relative ~= ""
-
+    -- local floating = vim.api.nvim_win_get_config(winid).relative ~= ""
+  end
+})
 require('lualine').setup{}
 --require("tint").setup({
   --tint = -85,  -- Darken colors, use a positive value to brighten

@@ -41,12 +41,23 @@ require("lazy").setup({
   "Xuyuanp/yanil",
   "nvim-lualine/lualine.nvim",
   "nvim-tree/nvim-web-devicons",
-  "nvim-tree/nvim-tree.lua",
+  --"nvim-tree/nvim-tree.lua",
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons", -- optional, but recommended
+    },
+    lazy = false, -- neo-tree will lazily load itself
+  },
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
   "akinsho/bufferline.nvim",
   "sbdchd/neoformat",
   "mhinz/vim-signify",
   "levouh/tint.nvim",
+  "github/copilot.vim",
   {
     "sudo-tee/opencode.nvim",
     lazy = false,
@@ -62,6 +73,14 @@ require("lazy").setup({
       "saghen/blink.cmp",
       "nvim-telescope/telescope.nvim",
     },
+  },
+  {
+    "Theo-Steiner/warped.nvim",
+    dependencies = { "TJDevries/colorbuddy.nvim" },
+    config = function()
+      -- Automatically syncs with active Warp theme colors
+      --require("warped").setup({})
+    end
   },
   "saghen/blink.cmp",
   "saghen/blink.lib",

@@ -11,8 +11,8 @@ local core_conf_files = {
     "markdown.lua",
     "opencode.lua",
     "navigation.vim",
-    "dap.lua",
-    "toggleterm.lua"
+    --"dap.lua",
+    --"toggleterm.lua"
 }
 
 for _, name in ipairs(core_conf_files) do
@@ -20,3 +20,6 @@ for _, name in ipairs(core_conf_files) do
     local source_cmd = "source " .. path
     vim.cmd(source_cmd)
 end
+
+--vim.opt.termguicolors = false
+--vim.cmd("colorscheme default")
